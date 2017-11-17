@@ -9,6 +9,16 @@
 	<script src="https://bclearningnetwork.com/lib/jquery/jquery-3.1.0.min.js"></script>
 	<script src="https://bclearningnetwork.com/lib/createjs/createjs-2015.11.26.min.js"></script><!-- CreateJS library hosted on BCLN server -->
 	<script src="lib/ndgmr.Collision.js"></script>
+
+	<script>
+		var questions = [];
+		var version = "<?=$_GET['title']?>";
+
+		$.getJSON("versions/"+version+"/questions.json", function(json) {
+			questions = json;
+		});
+	</script>
+
 	<script type="text/javascript" src="helper.js"></script><!-- contains helper functions which do not call functions in balloon.js -->
 	<script type="text/javascript" src="labels.js"></script><!-- the main game JS file -->
 </head>
@@ -17,6 +27,6 @@
 	<canvas id="gameCanvas" width="500" height="600">
 		<!-- game will be rendered here -->
 	</canvas>
-	
+
 </body>
 </html>

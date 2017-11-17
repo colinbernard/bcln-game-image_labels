@@ -10,15 +10,6 @@ var FPS = 24;
 
 var STAGE_WIDTH, STAGE_HEIGHT;
 
-// question data
-var questions = [
-					{question:"Mouth", answer:"a"},
-					{question:"Esophagus", answer:"B"},
-					{question:"Stomach", answer:"c"},
-					{question:"Intestines", answer:"d"},
-					{question:"Rectum", answer:"e"},
-				];
-
 var questionCounter = 0; //used
 var score;
 
@@ -566,7 +557,7 @@ function setupManifest() {
 			id: "fButtonHover"
 		},
 		{
-			src: "images/digestion.jpg",
+			src: "versions/"+ version +"/mainpic.jpg",
 			id: "mainpic"
 		},
 		{
@@ -671,7 +662,8 @@ function handleFileLoad(event) {
    		startButtonHover = new createjs.Bitmap(event.result);
 	} else if (event.item.id == "startButton") {
    		startButton = new createjs.Bitmap(event.result);
-	}}
+	}
+}
 
 function loadError(evt) {
     console.log("Error!",evt.text);
