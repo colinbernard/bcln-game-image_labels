@@ -22,6 +22,8 @@ var questions = [
 var questionCounter = 0; //used
 var score;
 
+var MAIN_PIC_WIDTH = 350;
+var MAIN_PIC_HEIGHT = 350;
 
 var gameStarted;
 
@@ -84,7 +86,7 @@ function endGame() {
 
 	//playSound("timeout"); gonna be a diff sound maybe
 
-	//display the score: 
+	//display the score:
 	scoreText = new createjs.Text('Score: ' + score + '/' + questions.length*6, '30px Arial', "black");
 	scoreText.x = 170;
 	scoreText.y = 271;
@@ -127,7 +129,7 @@ function startGame() {
 	startButtonHover.on("mousedown", function(){
 		playSound("click");
 		startButton.visible = false;
-		startButtonHover.visible = false; 
+		startButtonHover.visible = false;
 		stage.removeChild(startButton);
 		stage.removeChild(startButtonHover);
 		stage.removeChild(instructions);
@@ -153,7 +155,7 @@ function nextQuestion() {
 		if (questionCounter == questions.length) {
 			endGame();
 		} else {
-			
+
 
 			questionText.text = questions[questionCounter].question;
 
@@ -170,57 +172,59 @@ function initGraphics() {
 	initMuteUnMuteButtons();
 
 	//main image to label
+	mainPic.scaleX = MAIN_PIC_WIDTH / mainPic.image.width;
+	mainPic.scaleY = MAIN_PIC_HEIGHT / mainPic.image.height;
 	mainPic.x = 30;
 	mainPic.y = 145;
 	stage.addChild(mainPic);
 
 	//draw buttons
-	a.x = 30; 
+	a.x = 30;
 	a.y = 530;
 	stage.addChild(a);
 
-	b.x = 30 + 60; 
+	b.x = 30 + 60;
 	b.y = 530;
 	stage.addChild(b);
 
-	c.x = 30 + 60*2; 
+	c.x = 30 + 60*2;
 	c.y = 530;
 	stage.addChild(c);
 
-	d.x = 30 + 60*3; 
+	d.x = 30 + 60*3;
 	d.y = 530;
 	stage.addChild(d);
 
-	e.x = 30 + 60*4; 
+	e.x = 30 + 60*4;
 	e.y = 530;
 	stage.addChild(e);
 
-	f.x = 30 + 60*5; 
+	f.x = 30 + 60*5;
 	f.y = 530;
 	stage.addChild(f);
 
 
 	//hover buttons
 
-	ah.x = 30; 
+	ah.x = 30;
 	ah.y = 530;
 
-	bh.x = 30 + 60; 
+	bh.x = 30 + 60;
 	bh.y = 530;
 
-	ch.x = 30 + 60*2; 
+	ch.x = 30 + 60*2;
 	ch.y = 530;
 
 
-	dh.x = 30 + 60*3; 
+	dh.x = 30 + 60*3;
 	dh.y = 530;
 
 
-	eh.x = 30 + 60*4; 
+	eh.x = 30 + 60*4;
 	eh.y = 530;
 
 
-	fh.x = 30 + 60*5; 
+	fh.x = 30 + 60*5;
 	fh.y = 530;
 
 	initButtonListeners();
@@ -233,7 +237,7 @@ function initGraphics() {
 }
 
 
-//Event listeners for the play again button 
+//Event listeners for the play again button
 
 function initPlayAgain() {
 
@@ -255,7 +259,7 @@ function initPlayAgain() {
 
 }
 
-//Event Listeners for the letter buttons 
+//Event Listeners for the letter buttons
 
 function initButtonListeners() {
 	a.on("mouseover", function() {
@@ -276,7 +280,7 @@ function initButtonListeners() {
 	ah.on("mousedown", function() {
 		if (gameStarted) {
 			playSound("click");
-			checkAnswer("a"); 
+			checkAnswer("a");
 
 		}
 	});
@@ -299,7 +303,7 @@ function initButtonListeners() {
 	bh.on("mousedown", function() {
 		if (gameStarted) {
 			playSound("click");
-			checkAnswer("b"); 
+			checkAnswer("b");
 
 		}
 	});
@@ -322,7 +326,7 @@ function initButtonListeners() {
 	ch.on("mousedown", function() {
 		if (gameStarted) {
 			playSound("click");
-			checkAnswer("c"); 
+			checkAnswer("c");
 
 		}
 	});
@@ -345,7 +349,7 @@ function initButtonListeners() {
 	dh.on("mousedown", function() {
 		if (gameStarted) {
 			playSound("click");
-			checkAnswer("d"); 
+			checkAnswer("d");
 
 		}
 	});
@@ -367,7 +371,7 @@ function initButtonListeners() {
 	eh.on("mousedown", function() {
 		if (gameStarted) {
 			playSound("click");
-			checkAnswer("e"); 
+			checkAnswer("e");
 
 		}
 	});
@@ -391,7 +395,7 @@ function initButtonListeners() {
 	fh.on("mousedown", function() {
 		if (gameStarted) {
 			playSound("click");
-			checkAnswer("f"); 
+			checkAnswer("f");
 
 		}
 	});
@@ -411,7 +415,7 @@ function checkAnswer(letter){
 		tries = 0;
 		playSound("correctSound");
 		resetButtons();
-		nextQuestion(); 
+		nextQuestion();
 	} else if (tries < 5) {
 		tries++;
 		playSound("wrongSound");
@@ -420,19 +424,19 @@ function checkAnswer(letter){
 		playSound("wrongSound");
 	}
 
-//Resets the buttons back to visible after a successful answer. 	
+//Resets the buttons back to visible after a successful answer.
 
 function resetButtons(){
 	a.visible = true;
-	ah.visible = true; 
+	ah.visible = true;
 	b.visible = true;
-	bh.visible = true; 
+	bh.visible = true;
 	c.visible = true;
-	ch.visible = true; 
+	ch.visible = true;
 	d.visible = true;
-	dh.visible = true; 
+	dh.visible = true;
 	e.visible = true;
-	eh.visible = true; 
+	eh.visible = true;
 	f.visible = true;
 	fh.visible = true;
 }
@@ -444,22 +448,22 @@ function disableButton(letter){
 	letterString = new String(letter);
 	if (letterString.valueOf() === "a"){
 		a.visible = false;
-		ah.visible = false; 
+		ah.visible = false;
 	} else if (letterString.valueOf() === "b"){
 		b.visible = false;
-		bh.visible = false; 
+		bh.visible = false;
 	} else if (letterString.valueOf() === "c"){
 		c.visible = false;
-		ch.visible = false; 
+		ch.visible = false;
 	} else if (letterString.valueOf() === "d"){
 		d.visible = false;
-		dh.visible = false; 
+		dh.visible = false;
 	} else if (letterString.valueOf() === "e"){
 		e.visible = false;
-		eh.visible = false; 
+		eh.visible = false;
 	} else if (letterString.valueOf() === "f"){
 		f.visible = false;
-		fh.visible = false; 
+		fh.visible = false;
 	}
 }
 
@@ -486,10 +490,10 @@ function initMuteUnMuteButtons() {
 // bitmap variables
 var a, b, c, d, e, f;
 var ah, bh, ch, dh, eh, fh;
-var background; 
+var background;
 var mainPic;
-var gameOver; 
-var playAgain; 
+var gameOver;
+var playAgain;
 var playAgainHover;
 var fade;
 var muteButton, unmuteButton;
@@ -610,7 +614,7 @@ function setupManifest() {
 
 function startPreload() {
 	preload = new createjs.LoadQueue(true);
-    preload.installPlugin(createjs.Sound);          
+    preload.installPlugin(createjs.Sound);
     preload.on("fileload", handleFileLoad);
     preload.on("progress", handleFileProgress);
     preload.on("complete", loadComplete);
@@ -688,7 +692,7 @@ function loadComplete(event) {
 	createjs.Ticker.setFPS(FPS);
 	createjs.Ticker.addEventListener("tick", update); // call update function
 
-	initGraphics(); 
+	initGraphics();
     stage.update();
     startGame();
 }
