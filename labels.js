@@ -112,6 +112,7 @@ function startGame() {
 	stage.addChild(instructions);
 	startButtonHover.x = startButton.x = 150;
 	startButtonHover.y = startButton.y = 420;
+	startButtonHover.cursor = "pointer";
 
 	stage.addChild(startButton);
 
@@ -208,24 +209,27 @@ function initGraphics() {
 
 	ah.x = 30;
 	ah.y = 530;
+	ah.cursor = "pointer";
 
 	bh.x = 30 + 60;
 	bh.y = 530;
+	bh.cursor = "pointer";
 
 	ch.x = 30 + 60*2;
 	ch.y = 530;
-
+	ch.cursor = "pointer";
 
 	dh.x = 30 + 60*3;
 	dh.y = 530;
-
+	dh.cursor = "pointer";
 
 	eh.x = 30 + 60*4;
 	eh.y = 530;
-
+	eh.cursor = "pointer";
 
 	fh.x = 30 + 60*5;
 	fh.y = 530;
+	fh.cursor = "pointer";
 
 	initButtonListeners();
 
@@ -240,6 +244,8 @@ function initGraphics() {
 //Event listeners for the play again button
 
 function initPlayAgain() {
+
+	playAgainHover.cursor = "pointer";
 
 	playAgain.on("mouseover", function(){
 		stage.removeChild(playAgain);
