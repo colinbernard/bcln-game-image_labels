@@ -23,6 +23,10 @@ var gameStarted;
 var questionText;
 var scoreText;
 
+var number_of_buttons = 6; // A - E
+var buttons = [];
+var buttonsh = []; // hover buttons
+var letters = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
 
 var tries = 0;
@@ -161,7 +165,7 @@ function nextQuestion() {
  */
 function initGraphics() {
 	stage.addChild(background);
-	initMuteUnMuteButtons();
+	//initMuteUnMuteButtons(); < -- temporarily commented out, don't forget to uncomment and reposition
 
 	//main image to label
 	mainPic.scaleX = MAIN_PIC_WIDTH / mainPic.image.width;
@@ -170,57 +174,14 @@ function initGraphics() {
 	mainPic.y = 145;
 	stage.addChild(mainPic);
 
-	//draw buttons
-	a.x = 30;
-	a.y = 530;
-	stage.addChild(a);
-
-	b.x = 30 + 60;
-	b.y = 530;
-	stage.addChild(b);
-
-	c.x = 30 + 60*2;
-	c.y = 530;
-	stage.addChild(c);
-
-	d.x = 30 + 60*3;
-	d.y = 530;
-	stage.addChild(d);
-
-	e.x = 30 + 60*4;
-	e.y = 530;
-	stage.addChild(e);
-
-	f.x = 30 + 60*5;
-	f.y = 530;
-	stage.addChild(f);
-
-
-	//hover buttons
-
-	ah.x = 30;
-	ah.y = 530;
-	ah.cursor = "pointer";
-
-	bh.x = 30 + 60;
-	bh.y = 530;
-	bh.cursor = "pointer";
-
-	ch.x = 30 + 60*2;
-	ch.y = 530;
-	ch.cursor = "pointer";
-
-	dh.x = 30 + 60*3;
-	dh.y = 530;
-	dh.cursor = "pointer";
-
-	eh.x = 30 + 60*4;
-	eh.y = 530;
-	eh.cursor = "pointer";
-
-	fh.x = 30 + 60*5;
-	fh.y = 530;
-	fh.cursor = "pointer";
+	// draw buttons
+	for (var i = 0; i < number_of_buttons; i++) {
+		buttons[i].x = buttonsh[i].x = 30 + 60*i;
+		buttons[i].y = buttonsh[i].y = 530;
+		buttonsh[i].cursor = "pointer";
+		buttons[i].id = buttonsh[i].id = i;
+		stage.addChild(buttons[i]);
+	}
 
 	initButtonListeners();
 
@@ -259,143 +220,31 @@ function initPlayAgain() {
 //Event Listeners for the letter buttons
 
 function initButtonListeners() {
-	a.on("mouseover", function() {
-		if (gameStarted) {
-			stage.addChild(ah);
-			stage.removeChild(a);
-		}
-	});
 
-	ah.on("mouseout", function() {
-		if (gameStarted) {
-			stage.addChild(a);
-			stage.removeChild(ah);
-		}
-	});
+	for (var i = 0; i < number_of_buttons; i++) {
 
+		buttons[i].on("mouseover", function(event) {
+			if (gameStarted) {
+				stage.addChild(buttonsh[event.target.id]);
+				stage.removeChild(buttons[event.target.id]);
+			}
+		});
 
-	ah.on("mousedown", function() {
-		if (gameStarted) {
-			playSound("click");
-			checkAnswer("a");
+		buttonsh[i].on("mouseout", function(event) {
+			if (gameStarted) {
+				stage.addChild(buttons[event.target.id]);
+				stage.removeChild(buttonsh[event.target.id]);
+			}
+		});
 
-		}
-	});
+		buttonsh[i].on("mousedown", function(event) {
+			if (gameStarted) {
+				playSound("click");
+				checkAnswer(letters[event.target.id]);
 
-
-	b.on("mouseover", function() {
-		if (gameStarted) {
-			stage.addChild(bh);
-			stage.removeChild(b);
-		}
-	});
-
-	bh.on("mouseout", function() {
-		if (gameStarted) {
-			stage.addChild(b);
-			stage.removeChild(bh);
-		}
-	});
-
-	bh.on("mousedown", function() {
-		if (gameStarted) {
-			playSound("click");
-			checkAnswer("b");
-
-		}
-	});
-
-
-	c.on("mouseover", function() {
-		if (gameStarted) {
-			stage.addChild(ch);
-			stage.removeChild(c);
-		}
-	});
-
-	ch.on("mouseout", function() {
-		if (gameStarted) {
-			stage.addChild(c);
-			stage.removeChild(ch);
-		}
-	});
-
-	ch.on("mousedown", function() {
-		if (gameStarted) {
-			playSound("click");
-			checkAnswer("c");
-
-		}
-	});
-
-
-	d.on("mouseover", function() {
-		if (gameStarted) {
-			stage.addChild(dh);
-			stage.removeChild(d);
-		}
-	});
-
-	dh.on("mouseout", function() {
-		if (gameStarted) {
-			stage.addChild(d);
-			stage.removeChild(dh);
-		}
-	});
-
-	dh.on("mousedown", function() {
-		if (gameStarted) {
-			playSound("click");
-			checkAnswer("d");
-
-		}
-	});
-
-	e.on("mouseover", function() {
-		if (gameStarted) {
-			stage.addChild(eh);
-			stage.removeChild(e);
-		}
-	});
-
-	eh.on("mouseout", function() {
-		if (gameStarted) {
-			stage.addChild(e);
-			stage.removeChild(eh);
-		}
-	});
-
-	eh.on("mousedown", function() {
-		if (gameStarted) {
-			playSound("click");
-			checkAnswer("e");
-
-		}
-	});
-
-
-	f.on("mouseover", function() {
-		if (gameStarted) {
-			stage.addChild(fh);
-			stage.removeChild(f);
-		}
-	});
-
-	fh.on("mouseout", function() {
-		if (gameStarted) {
-			stage.addChild(f);
-			stage.removeChild(fh);
-		}
-	});
-
-
-	fh.on("mousedown", function() {
-		if (gameStarted) {
-			playSound("click");
-			checkAnswer("f");
-
-		}
-	});
+			}
+		});
+	}
 }
 
 
@@ -420,48 +269,25 @@ function checkAnswer(letter){
 	} else {
 		playSound("wrongSound");
 	}
+}
 
 //Resets the buttons back to visible after a successful answer.
-
 function resetButtons(){
-	a.visible = true;
-	ah.visible = true;
-	b.visible = true;
-	bh.visible = true;
-	c.visible = true;
-	ch.visible = true;
-	d.visible = true;
-	dh.visible = true;
-	e.visible = true;
-	eh.visible = true;
-	f.visible = true;
-	fh.visible = true;
+
+	for (var i = 0; i < number_of_buttons; i++) {
+		buttons[i].visible = true;
+		buttonsh[i].visible = true;
+	}
 }
 
 
-}
+
 
 function disableButton(letter){
-	letterString = new String(letter);
-	if (letterString.valueOf() === "a"){
-		a.visible = false;
-		ah.visible = false;
-	} else if (letterString.valueOf() === "b"){
-		b.visible = false;
-		bh.visible = false;
-	} else if (letterString.valueOf() === "c"){
-		c.visible = false;
-		ch.visible = false;
-	} else if (letterString.valueOf() === "d"){
-		d.visible = false;
-		dh.visible = false;
-	} else if (letterString.valueOf() === "e"){
-		e.visible = false;
-		eh.visible = false;
-	} else if (letterString.valueOf() === "f"){
-		f.visible = false;
-		fh.visible = false;
-	}
+
+	var index = letters.indexOf(letter[0]);
+	buttons[index].visible = false;
+	buttonsh[index].visible = false;
 }
 
 /*
@@ -485,8 +311,6 @@ function initMuteUnMuteButtons() {
 ////////////////////////////////////////////////// PRE LOAD JS FUNCTIONS
 
 // bitmap variables
-var a, b, c, d, e, f;
-var ah, bh, ch, dh, eh, fh;
 var background;
 var mainPic;
 var gameOver;
@@ -596,16 +420,16 @@ function setupManifest() {
 		},
 		{
 			src: "images/startButton.png",
-			id: "startButton"
+			id: "start"
 		},
 		{
 			src: "images/startButtonHover.png",
-			id: "startButtonHover"
+			id: "startHover"
 		},
 		{
 			src: "sounds/win.mp3",
 			id: "winsound"
-		},
+		}
 	];
 }
 
@@ -621,41 +445,17 @@ function startPreload() {
 
 function handleFileLoad(event) {
 	console.log("A file has loaded of type: " + event.item.type);
-    // create bitmaps of images
-   	if (event.item.id == "mute") {
-   		muteButton = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "unmute") {
-   		unmuteButton = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "aButton") {
-   		a = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "aButtonHover") {
-   		ah = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "bButton") {
-   		b = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "bButtonHover") {
-   		bh = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "cButton") {
-   		c = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "cButtonHover") {
-   		ch = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "dButton") {
-   		d = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "dButtonHover") {
-   		dh = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "eButton") {
-   		e = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "eButtonHover") {
-   		eh = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "fButton") {
-   		f = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "fButtonHover") {
-   		fh = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "background") {
-   		background = new createjs.Bitmap(event.result);
-   	} else if (event.item.id == "mainpic") {
-   		mainPic = new createjs.Bitmap(event.result);
-   	}  else if (event.item.id == "fade") {
-   		fade = new createjs.Bitmap(event.result);
+  // create bitmaps of images
+ 	if (event.item.id == "mute") {
+ 		muteButton = new createjs.Bitmap(event.result);
+ 	} else if (event.item.id == "unmute") {
+ 		unmuteButton = new createjs.Bitmap(event.result);
+ 	} else if (event.item.id == "background") {
+ 		background = new createjs.Bitmap(event.result);
+ 	} else if (event.item.id == "mainpic") {
+ 		mainPic = new createjs.Bitmap(event.result);
+ 	}  else if (event.item.id == "fade") {
+ 		fade = new createjs.Bitmap(event.result);
 	} else if (event.item.id == "gameOver") {
    		gameOver = new createjs.Bitmap(event.result);
 	}  else if (event.item.id == "playAgain") {
@@ -664,10 +464,14 @@ function handleFileLoad(event) {
    		playAgainHover = new createjs.Bitmap(event.result);
 	} else if (event.item.id == "instructions") {
    		instructions = new createjs.Bitmap(event.result);
-	} else if (event.item.id == "startButtonHover") {
+	} else if (event.item.id == "startHover") {
    		startButtonHover = new createjs.Bitmap(event.result);
-	} else if (event.item.id == "startButton") {
+	} else if (event.item.id == "start") {
    		startButton = new createjs.Bitmap(event.result);
+	} else if (event.item.id.includes("ButtonHover")) {
+		buttonsh.push(new createjs.Bitmap(event.result));
+	} else if (event.item.id.includes("Button")) {
+		buttons.push(new createjs.Bitmap(event.result));
 	}
 }
 
@@ -684,15 +488,15 @@ function handleFileProgress(event) {
  * Displays the start screen.
  */
 function loadComplete(event) {
-    console.log("Finished Loading Assets");
+  console.log("Finished Loading Assets");
 
-    // ticker calls update function, set the FPS
+  // ticker calls update function, set the FPS
 	createjs.Ticker.setFPS(FPS);
 	createjs.Ticker.addEventListener("tick", update); // call update function
 
 	initGraphics();
-    stage.update();
-    startGame();
+  stage.update();
+  startGame();
 }
 
 ///////////////////////////////////// END PRELOADJS FUNCTIONS
