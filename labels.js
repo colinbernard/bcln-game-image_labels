@@ -23,7 +23,6 @@ var gameStarted;
 var questionText;
 var scoreText;
 
-var number_of_buttons = 6; // A - E
 var buttons = [];
 var buttonsh = []; // hover buttons
 var letters = ["a", "b", "c", "d", "e", "f", "g", "h"];

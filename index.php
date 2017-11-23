@@ -13,9 +13,14 @@
 	<script>
 		var questions = [];
 		var version = "<?=$_GET['title']?>";
+		var number_of_buttons;
 
 		$.getJSON("versions/"+version+"/questions.json", function(json) {
 			questions = json;
+		});
+
+		$.getJSON("versions/"+version+"/data.json", function(json) {
+			number_of_buttons = json;
 		});
 	</script>
 
