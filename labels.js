@@ -104,7 +104,7 @@ function endGame() {
 function updateScore(){
 
 	num.text = score;
-
+	num.x = 478 - num.getMeasuredWidth()/2;
 
 
 }
@@ -167,7 +167,8 @@ function startGame() {
 		num = new createjs.Text('0', '30px Arial', "black");
 		denom = new createjs.Text(number_of_buttons*questions.length + '', '30px Arial', "black");
 
-		num.x = denom.x = 455;
+		num.x = 478 - num.getMeasuredWidth()/2;
+		denom.x = 478 - denom.getMeasuredWidth()/2;
 		num.y = 192;
 		denom.y = 230;
 
@@ -207,7 +208,7 @@ function nextQuestion() {
  */
 function initGraphics() {
 	stage.addChild(background);
-	initMuteUnMuteButtons(); 
+	initMuteUnMuteButtons();
 
 	//main image to label
 	mainPic.scaleX = MAIN_PIC_WIDTH / mainPic.image.width;
@@ -347,8 +348,8 @@ function initMuteUnMuteButtons() {
 	hitArea.graphics.beginFill("#000").drawRect(0, 0, muteButton.image.width, muteButton.image.height);
 	muteButton.hitArea = unmuteButton.hitArea = hitArea;
 
-	muteButton.x = unmuteButton.x = 465;
-	muteButton.y = unmuteButton.y = 400;
+	muteButton.x = unmuteButton.x = STAGE_WIDTH - muteButton.image.width - 5;
+	muteButton.y = unmuteButton.y = 5;
 
 	muteButton.on("click", toggleMute);
 	unmuteButton.on("click", toggleMute);
@@ -550,7 +551,7 @@ function handleFileLoad(event) {
    		right = new createjs.Bitmap(event.result);
 	} else if (event.item.id == "wrong") {
    		wrong = new createjs.Bitmap(event.result);
-	} 
+	}
 }
 
 function loadError(evt) {
