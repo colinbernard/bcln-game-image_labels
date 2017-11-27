@@ -30,6 +30,8 @@ var letters = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
 
 var tries = 0;
+var targets = [];
+
 
 
 
@@ -55,6 +57,7 @@ function init() {
 	questionCounter = 0;
 	levelCounter = 1;
 	stage.update();
+
 }
 
 /*
@@ -104,7 +107,7 @@ function endGame() {
 function updateScore(){
 
 	num.text = score;
-	num.x = 478 - num.getMeasuredWidth()/2;
+
 
 
 }
@@ -129,12 +132,23 @@ function showWrongSplash() {
 	})
 }
 
+function QO(){
+	for (var k = 0; k < questions.length; k++){
+		console.log(k + 'added');
+		targets.push(k);
+	}
+	shuffle(targets);
+	questionText.text = questions[targets[0]].question;
+
+
+}
+
 /*
  * Starts the game. Called by preloadJS loadComplete
  */
 function startGame() {
 
-
+	QO();
 	stage.addChild(fade);
 	stage.addChild(instructions);
 	startButtonHover.x = startButton.x = 150;
@@ -167,16 +181,13 @@ function startGame() {
 		num = new createjs.Text('0', '30px Arial', "black");
 		denom = new createjs.Text(number_of_buttons*questions.length + '', '30px Arial', "black");
 
-		num.x = 478 - num.getMeasuredWidth()/2;
-		denom.x = 478 - denom.getMeasuredWidth()/2;
+		num.x = denom.x = 455;
 		num.y = 192;
 		denom.y = 230;
 
 		stage.addChild(num); stage.addChild(denom);
 		gameStarted = true;
 	});
-
-
 
 
 
@@ -192,11 +203,12 @@ function nextQuestion() {
 		questionCounter++;
 		updateScore();
 		if (questionCounter == questions.length) {
+
 			endGame();
 		} else {
 
 
-			questionText.text = questions[questionCounter].question;
+			questionText.text = questions[targets[questionCounter]].question;
 
 
 		}
@@ -208,7 +220,7 @@ function nextQuestion() {
  */
 function initGraphics() {
 	stage.addChild(background);
-	initMuteUnMuteButtons();
+	initMuteUnMuteButtons(); 
 
 	//main image to label
 	mainPic.scaleX = MAIN_PIC_WIDTH / mainPic.image.width;
@@ -228,7 +240,7 @@ function initGraphics() {
 
 	initButtonListeners();
 
-	questionText = new createjs.Text(questions[questionCounter].question, '25px Arial', "black");
+	questionText = new createjs.Text(questions[0].question, '25px Arial', "black");
 	questionText.x = 155;
 	questionText.y = 91;
 	stage.addChild(questionText);
@@ -299,9 +311,10 @@ function initButtonListeners() {
 
 function checkAnswer(letter){
 	letterString = new String(letter);
-	q = questions[questionCounter].question;
-	ans = new String(questions[questionCounter].answer);
+	q = questions[targets[questionCounter]].question;
+	ans = new String(questions[targets[questionCounter]].answer);
 	ans = ans.toLowerCase().trim(); //Just in case user inputs answer key as caps / with white space
+	console.log(q + "   " + ans + "   " + letterString);
 
 	if(letterString.valueOf() === ans.valueOf()){
 		score = score + (number_of_buttons - tries);
@@ -348,8 +361,8 @@ function initMuteUnMuteButtons() {
 	hitArea.graphics.beginFill("#000").drawRect(0, 0, muteButton.image.width, muteButton.image.height);
 	muteButton.hitArea = unmuteButton.hitArea = hitArea;
 
-	muteButton.x = unmuteButton.x = STAGE_WIDTH - muteButton.image.width - 5;
-	muteButton.y = unmuteButton.y = 5;
+	muteButton.x = unmuteButton.x = 465;
+	muteButton.y = unmuteButton.y = 400;
 
 	muteButton.on("click", toggleMute);
 	unmuteButton.on("click", toggleMute);
@@ -430,14 +443,6 @@ function setupManifest() {
 			id: "eButtonHover"
 		},
 		{
-			src: "images/button_G.png",
-			id: "eButton"
-		},
-		{
-			src: "images/button_Gh.png",
-			id: "eButtonHover"
-		},
-		{
 			src: "images/button_F.png",
 			id: "fButton"
 		},
@@ -446,12 +451,20 @@ function setupManifest() {
 			id: "fButtonHover"
 		},
 		{
+			src: "images/button_G.png",
+			id: "gButton"
+		},
+		{
+			src: "images/button_Gh.png",
+			id: "gButtonHover"
+		},
+		{
 			src: "images/button_H.png",
-			id: "eButton"
+			id: "hButton"
 		},
 		{
 			src: "images/button_Hh.png",
-			id: "eButtonHover"
+			id: "hButtonHover"
 		},
 		{
 			src: "versions/"+ version +"/mainpic.jpg",
@@ -551,7 +564,7 @@ function handleFileLoad(event) {
    		right = new createjs.Bitmap(event.result);
 	} else if (event.item.id == "wrong") {
    		wrong = new createjs.Bitmap(event.result);
-	}
+	} 
 }
 
 function loadError(evt) {
