@@ -30,8 +30,6 @@ var letters = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
 
 var tries = 0;
-var targets = [];
-
 
 
 
@@ -57,7 +55,6 @@ function init() {
 	questionCounter = 0;
 	levelCounter = 1;
 	stage.update();
-
 }
 
 /*
@@ -132,23 +129,12 @@ function showWrongSplash() {
 	})
 }
 
-function QO(){
-	for (var k = 0; k < questions.length; k++){
-		console.log(k + 'added');
-		targets.push(k);
-	}
-	shuffle(targets);
-	questionText.text = questions[targets[0]].question;
-
-
-}
-
 /*
  * Starts the game. Called by preloadJS loadComplete
  */
 function startGame() {
 
-	QO();
+
 	stage.addChild(fade);
 	stage.addChild(instructions);
 	startButtonHover.x = startButton.x = 150;
@@ -192,6 +178,8 @@ function startGame() {
 
 
 
+
+
 }
 
 /*
@@ -203,12 +191,11 @@ function nextQuestion() {
 		questionCounter++;
 		updateScore();
 		if (questionCounter == questions.length) {
-
 			endGame();
 		} else {
 
 
-			questionText.text = questions[targets[questionCounter]].question;
+			questionText.text = questions[questionCounter].question;
 
 
 		}
@@ -240,7 +227,7 @@ function initGraphics() {
 
 	initButtonListeners();
 
-	questionText = new createjs.Text(questions[0].question, '25px Arial', "black");
+	questionText = new createjs.Text(questions[questionCounter].question, '25px Arial', "black");
 	questionText.x = 155;
 	questionText.y = 91;
 	stage.addChild(questionText);
@@ -311,10 +298,9 @@ function initButtonListeners() {
 
 function checkAnswer(letter){
 	letterString = new String(letter);
-	q = questions[targets[questionCounter]].question;
-	ans = new String(questions[targets[questionCounter]].answer);
+	q = questions[questionCounter].question;
+	ans = new String(questions[questionCounter].answer);
 	ans = ans.toLowerCase().trim(); //Just in case user inputs answer key as caps / with white space
-	console.log(q + "   " + ans + "   " + letterString);
 
 	if(letterString.valueOf() === ans.valueOf()){
 		score = score + (number_of_buttons - tries);
@@ -443,6 +429,14 @@ function setupManifest() {
 			id: "eButtonHover"
 		},
 		{
+			src: "images/button_G.png",
+			id: "eButton"
+		},
+		{
+			src: "images/button_Gh.png",
+			id: "eButtonHover"
+		},
+		{
 			src: "images/button_F.png",
 			id: "fButton"
 		},
@@ -451,20 +445,12 @@ function setupManifest() {
 			id: "fButtonHover"
 		},
 		{
-			src: "images/button_G.png",
-			id: "gButton"
-		},
-		{
-			src: "images/button_Gh.png",
-			id: "gButtonHover"
-		},
-		{
 			src: "images/button_H.png",
-			id: "hButton"
+			id: "eButton"
 		},
 		{
 			src: "images/button_Hh.png",
-			id: "hButtonHover"
+			id: "eButtonHover"
 		},
 		{
 			src: "versions/"+ version +"/mainpic.jpg",
