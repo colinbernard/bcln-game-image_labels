@@ -1,1 +1,1 @@
-# bcln-image-labels
+# Image labelling game
